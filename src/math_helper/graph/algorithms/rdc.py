@@ -20,6 +20,6 @@ def get_centers(graph) -> set[str]:
 
     for i, e in enumerate(eccentricities):
         if e == radius:
-            centers.add(graph.vertices[i].name)
+            centers.add(tuple(graph.vertices)[i].name)
 
     return centers
