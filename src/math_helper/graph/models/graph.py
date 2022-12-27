@@ -6,6 +6,10 @@ from .vertex import VertexModel
 
 class GraphModel(ReprUtilMixin, CopyMixin):
 
+    graph_attrs = None
+    node_attrs = None
+    edge_attrs = None
+
     def __init__(
         self,
         edges_data: dict[str, dict[str, EdgeModel | None]] | None = None,
@@ -26,6 +30,7 @@ class GraphModel(ReprUtilMixin, CopyMixin):
         return f'Graph(V={_vertices}, E={_edges})'
 
     def __eq__(self, other: 'GraphModel') -> bool:
+        # TODO: better graph eq using models comparison
         def edges_key(g):
             return {
                 (e.v1, e.v2)

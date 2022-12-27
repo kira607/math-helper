@@ -34,11 +34,11 @@ class TreeNodeView(VertexView):
 
     @property
     def parent(self) -> Optional['TreeNodeView']:
-        return self._gc.make_vertex_view(self.get_model().parent)
+        return self._gc.make_vertex_view(self._get_model().parent)
 
     @property
     def gparent(self) -> Optional['TreeNodeView']:
-        model = self.get_model()
+        model = self._get_model()
         if model.parent:
             return model.parent.parent
         return None
@@ -74,3 +74,34 @@ class Tree(GraphView):
             if not any(col.values()):
                 leaves.append(self._controller.make_vertex_view(v1))
         return leaves
+
+    def dot(self):
+        def _dict_join(attrs):
+            if not attrs:
+                return ''
+            joined = ','.join(f'{k}={v}' for k, v in attrs.items())
+            return joined
+
+        def _get_attrs_string(attrs, add_leading_space: bool = False) -> str:
+            joined = _dict_join(attrs)
+            if not joined:
+                return ''
+            leading_space = ' ' if add_leading_space else ''
+            return f'{leading_space}[{joined}]'
+
+        start = f'graph G {{\n'
+        end = '}'
+        indent = '    '
+
+        vertices_dot = ''
+        for vertex in self._controller.vertices:
+            vertex_dot = f'"{vertex.name}"' + _get_attrs_string(vertex.model.attrs)
+            vertices_dot += indent + vertex_dot + '\n'
+
+        edges_dot = ''
+        for edge in self._controller.edges:
+            edge_dot = f'"{edge.v1.name}" -- "{edge.v2.name}"' + _get_attrs_string(edge.model.attrs)
+            edges_dot += indent + edge_dot + '\n'
+
+        dot_string = start + vertices_dot + edges_dot + end
+        return dot_string

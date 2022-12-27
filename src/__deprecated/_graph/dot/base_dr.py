@@ -11,7 +11,7 @@ class VertexDotRenderer(DotRenderer):
     _element_type = VertexView
 
     def render(self, include_attributes: bool = False) -> str:
-        dot_string = f'"{self._element.name}"'
+        dot_string = f'"{self._model.name}"'
         if include_attributes:
             dot_string += self._get_attrs_string(True)
         return dot_string
@@ -24,13 +24,13 @@ class EdgeDotRenderer(DotRenderer):
 
     def render(self, include_attributes: bool = False) -> str:
         arrow = self._arrow
-        dot_string = f'{self._element.v1.name} {arrow} {self._element.v2.name}'
+        dot_string = f'{self._model.v1.name} {arrow} {self._model.v2.name}'
         if include_attributes:
             dot_string += self._get_attrs_string(True)
         return dot_string
 
 
-class NdGraphDotRenderer(DotRenderer):
+class BaseGraphDotRenderer(DotRenderer):
 
     _type = 'graph'
     _label = 'G'
@@ -50,7 +50,7 @@ class NdGraphDotRenderer(DotRenderer):
 
     def _get_vertices_dot(self) -> str:
         result = ''
-        for vertex_view in self._element:
+        for vertex_view in self._model:
             renderer = self._vertex_renderer(vertex_view)
             vertex_dot = renderer.render(include_attributes=True)
             result += '    ' + vertex_dot + '\n'
@@ -58,7 +58,7 @@ class NdGraphDotRenderer(DotRenderer):
 
     def _get_edges_dot(self) -> str:
         result = ''
-        for edge_view in self._element.edges:
+        for edge_view in self._model.edges:
             renderer = self._edge_renderer(edge_view)
             edge_dot = renderer.render(include_attributes=True)
             result += '    ' + edge_dot + '\n'

@@ -4,7 +4,7 @@ from math_helper.graph.models import GraphModel
 from math_helper.graph.models import VertexModel
 
 
-class ModelView:
+class GraphModifier:
 
     _graph_model: GraphModel = None
     _vertices_data: dict[str, VertexModel] = None
@@ -18,9 +18,9 @@ class ModelView:
 
     @property
     def model(self):
-        return self.get_model()
+        return self._get_model()
 
-    def get_model(self):
+    def _get_model(self):
         raise NotImplementedError()
 
 

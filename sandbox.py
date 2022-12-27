@@ -1,13 +1,36 @@
 from math_helper.graph import DiGraph
-from math_helper.graph.dot import DiGraphDotRenderer
+
+
+class DotAttrsCollection:
+    pass
+
+
+class VertexDot:
+
+    def __call__(self) -> str:
+        '''render dot string.'''
+        return self._render()
+
+    def set_attrs(self):
+        '''set dot attributes'''
+
+    def get_attrs(self):
+        '''get dot attributes.'''
+
+    def _render(self):
+        return ''
 
 
 def main() -> None:
     g = DiGraph()
+    g.get_model().graph_attrs = {'a': 'b'}
     g.add_edge(2, 1).bidirectional = True
     g.add_edge(3, 4)
-    g.add_edge(1, 4)
-    print(DiGraphDotRenderer(g).render())
+    edge = g.add_edge(1, 4)
+    edge.v1.model.attrs = {'shape': 'diamond'}
+    print(edge.v1.model.attrs)
+    edge.model.attrs = {'color': 'red'}
+    print(g.dot())
     print(g.get_edge(1, 2) == g.get_edge(2, 1))
 
 

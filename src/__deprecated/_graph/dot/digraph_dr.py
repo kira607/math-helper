@@ -1,5 +1,5 @@
 import math_helper.graph.dot.base_dr as base
-from math_helper.graph.digraph import DiEdgeView
+from math_helper.graph.digraph.digraph import DiEdgeView
 from math_helper.graph.digraph import DiGraph
 
 
@@ -14,8 +14,8 @@ class BidirectionalEdgeDotRenderer(base.EdgeDotRenderer):
 
     def render(self, include_attributes: bool = False) -> str:
         arrow = self._arrow
-        dot_string = f'{self._element.v1.name} {arrow} {self._element.v2.name}'
-        if self._element.bidirectional:
+        dot_string = f'{self._model.v1.name} {arrow} {self._model.v2.name}'
+        if self._model.bidirectional:
             self._attrs.update({'dir': 'both'})
         if include_attributes:
             dot_string += self._get_attrs_string(True)

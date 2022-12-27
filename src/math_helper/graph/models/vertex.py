@@ -7,6 +7,8 @@ from math_helper.utils.types import StrConvertable
 class VertexModel(ReprUtilMixin, CopyMixin):
     '''A base vertex model.'''
 
+    attrs = None
+
     name = Typed(str)
 
     def __init__(self, name: StrConvertable) -> None:

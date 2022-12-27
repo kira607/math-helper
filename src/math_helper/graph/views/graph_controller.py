@@ -6,12 +6,12 @@ from math_helper.graph.models import VertexModel
 from math_helper.utils import MISSING
 from math_helper.utils.types import StrConvertable
 
-from .common import ModelView
+from .common import GraphModifier
 from .edge import EdgeView
 from .vertex import VertexView
 
 
-class GraphController(ModelView):
+class GraphController(GraphModifier):
 
     def __init__(
         self,
@@ -145,5 +145,5 @@ class GraphController(ModelView):
 
     # abstract methods implementation
 
-    def get_model(self) -> GraphModel:
+    def _get_model(self) -> GraphModel:
         return self._graph_model

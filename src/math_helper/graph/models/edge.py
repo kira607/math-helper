@@ -6,6 +6,8 @@ from math_helper.utils.types import StrConvertable
 
 class EdgeModel(ReprUtilMixin, CopyMixin):
 
+    attrs = None
+
     v1 = Typed(str)
     v2 = Typed(str)
 

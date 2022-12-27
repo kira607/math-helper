@@ -51,7 +51,7 @@ class BaseGraph(GraphView):
 
     def add_edge(self, v1: StrConvertable, v2: StrConvertable) -> _edge_view_type:
         new_edge = self._controller.add_edge(v1, v2)
-        new_edge = new_edge.get_model()
+        new_edge = new_edge.model
         self._controller.put_edge(new_edge, v2, v1)
         return new_edge
 
@@ -76,12 +76,12 @@ class BaseGraph(GraphView):
         if not merge_edge:
             return
 
-        merge_edge = merge_edge.get_model()
+        merge_edge = merge_edge._get_model()
         v1 = self._graph_model.vertices_data[v1]
         v2 = self._graph_model.vertices_data[v2]
 
         for edge in self._controller.edges:
-            if edge.get_model() == merge_edge:
+            if edge.model == merge_edge:
                 continue
 
             u = None
@@ -139,6 +139,6 @@ class BaseGraph(GraphView):
                 ev = self.get_edge(v1, v2)
                 if not sub_graph._graph_model.edges_data.get(v1):
                     sub_graph._graph_model.edges_data[v1] = {}
-                sub_graph._graph_model.edges_data[v1][v2] = ev.get_model().copy()
+                sub_graph._graph_model.edges_data[v1][v2] = ev._get_model().copy()
 
         return sub_graph

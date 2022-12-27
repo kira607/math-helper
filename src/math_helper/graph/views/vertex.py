@@ -1,17 +1,17 @@
 from math_helper.utils.types import StrConvertable
 
-from .common import ModelView
+from .common import GraphModifier
 from .common import UsesController
 
 
-class VertexView(ModelView, UsesController):
+class VertexView(GraphModifier, UsesController):
     '''A base vertex view.'''
 
     def __init__(self, name: StrConvertable) -> None:
         self._name = name
 
     def __str__(self) -> str:
-        return str(self.get_model())
+        return str(self._get_model())
 
     @property
     def name(self) -> str:
@@ -36,5 +36,5 @@ class VertexView(ModelView, UsesController):
         self._edges_data[new_name] = self._edges_data[self.name]
         self._gc.remove_vertex(self.name)
 
-    def get_model(self):
+    def _get_model(self):
         return self._vertices_data.get(self._name)
