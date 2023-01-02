@@ -38,7 +38,8 @@ class GraphModel(ReprUtilMixin, CopyMixin):
             return {
                 (e.v1, e.v2)
                 for v1, col in g.edges_data.items()
-                for v2, e in col
+                for v2, e in col.items()
+                if e
             }
 
         vertices_same = set(self.vertices_data) == set(other.vertices_data)
