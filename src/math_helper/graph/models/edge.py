@@ -14,6 +14,7 @@ class EdgeModel(ReprUtilMixin, CopyMixin):
     def __init__(self, v1: StrConvertable, v2: StrConvertable) -> None:
         self.v1 = v1
         self.v2 = v2
+        self.attrs = {}
 
     def __str__(self) -> str:
         _cls = self.__class__.__name__

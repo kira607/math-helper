@@ -13,6 +13,7 @@ class VertexModel(ReprUtilMixin, CopyMixin):
 
     def __init__(self, name: StrConvertable) -> None:
         self.name = name
+        self.attrs = {}
 
     def __str__(self) -> str:
         _cls = self.__class__.__name__
