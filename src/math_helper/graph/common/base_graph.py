@@ -97,38 +97,6 @@ class BaseGraph(GraphView):
         self.remove_edge(v1.name, v2.name)
         self.remove_vertex(to_remove)
 
-    def get_adjacency_matrix(
-        self,
-        no_path: Any = 0,
-        self_cross: Any = 0,
-        get_edge_val: Callable[[_edge_model_type], Any] = lambda edge_model: 1,
-    ) -> list[list[Any]]:
-        '''
-        Get a graph adjacency matrix.
-
-        :param no_path: A value to be put in matrix if there is no edge connecting vertices.
-        :param self_cross: A value to be put in matrix for self-crossing vertices (if there is no cycle edge).
-        :param get_edge_val: A callable for getting an adjacency matrix cell value if edge connecting vertices exists.
-        :return: A graph adjacency matrix
-        '''
-        adjacency_matrix = []
-
-        for v1, data in self._graph_model.edges_data.items():
-            adjacency_matrix.append([])
-            for v2, ed in data.items():
-
-                if ed is None:
-                    if v1 == v2:
-                        val = self_cross
-                    else:
-                        val = no_path
-                else:
-                    val = get_edge_val(ed)
-
-                adjacency_matrix[-1].append(val)
-
-        return adjacency_matrix
-
     def get_sub_graph(self, vertices: Iterable[StrConvertable]) -> 'BaseGraph':
         sub_graph = self.__class__()
 
@@ -139,6 +107,6 @@ class BaseGraph(GraphView):
                 ev = self.get_edge(v1, v2)
                 if not sub_graph._graph_model.edges_data.get(v1):
                     sub_graph._graph_model.edges_data[v1] = {}
-                sub_graph._graph_model.edges_data[v1][v2] = ev._get_model().copy()
+                sub_graph._graph_model.edges_data[v1][v2] = ev.model.copy()
 
         return sub_graph

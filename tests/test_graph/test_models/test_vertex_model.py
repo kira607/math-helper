@@ -11,5 +11,5 @@ from math_helper.graph.models import VertexModel
         (VertexModel('a'), VertexModel('b'), False),
     ),
 )
-def test___eq__(v1, v2, expected_eq):
+def test_vertex_model___eq__(v1, v2, expected_eq):
     assert (v1 == v2) == expected_eq

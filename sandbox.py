@@ -23,7 +23,7 @@ class VertexDot:
 
 def main() -> None:
     g = DiGraph()
-    g.get_model().graph_attrs = {'a': 'b'}
+    g.graph_attrs = {'a': 'b'}
     g.add_edge(2, 1).bidirectional = True
     g.add_edge(3, 4)
     edge = g.add_edge(1, 4)

@@ -22,5 +22,9 @@ class EdgeView(GraphModifier, UsesController):
     def v2(self) -> VertexView:
         return self._gc.make_vertex_view(self._v2)
 
+    @property
+    def dot_attrs(self) -> dict:
+        return self.model.attrs
+
     def _get_model(self):
         return self._edges_data[self._v1][self._v2]

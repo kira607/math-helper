@@ -1,6 +1,7 @@
 from typing import Type, Optional, Any
 
 from math_helper.graph.models import EdgeModel
+from math_helper.graph.models import GraphModel
 from math_helper.graph.models import VertexModel
 from math_helper.graph.views import EdgeView
 from math_helper.graph.views import GraphView
@@ -34,13 +35,12 @@ class TreeNodeView(VertexView):
 
     @property
     def parent(self) -> Optional['TreeNodeView']:
-        return self._gc.make_vertex_view(self._get_model().parent)
+        return self._gc.make_vertex_view(self.model.parent)
 
     @property
     def gparent(self) -> Optional['TreeNodeView']:
-        model = self._get_model()
-        if model.parent:
-            return model.parent.parent
+        if self.model.parent:
+            return self.model.parent.parent
         return None
 
     def add_child(self, new_child_name: StrConvertable) -> 'TreeNodeView':
@@ -61,19 +61,23 @@ class Tree(GraphView):
     _edge_model_type: Type[EdgeModel] = EdgeModel
     _edge_view_type: Type[EdgeView] = EdgeView
 
-    _root = None
-
     # TODO: add methods for initialization
+    def __init__(self, root: StrConvertable, graph_model: GraphModel | None = None) -> None:
+        super().__init__(graph_model)
+        self._root = root
 
     def get_node(self, name: StrConvertable, default: Any = MISSING) -> TreeNodeView | Any:
         return self._controller.get_vertex(name, default)
 
     def get_leaves(self) -> list[TreeNodeView]:
         leaves = []
-        for v1, col in self.get_model().edges_data.items():
-            if not any(col.values()):
+        for v1, col in self.model.edges_data.items():
+            if sum(1 if v else 0 for v in col.values()) == 1:
                 leaves.append(self._controller.make_vertex_view(v1))
         return leaves
+
+    def copy(self):
+        return self.__class__(self._root, self.model.copy())
 
     def dot(self):
         def _dict_join(attrs):
@@ -89,9 +93,13 @@ class Tree(GraphView):
             leading_space = ' ' if add_leading_space else ''
             return f'{leading_space}[{joined}]'
 
-        start = f'graph G {{\n'
-        end = '}'
         indent = '    '
+
+        start = f'graph G {{\n'
+        start += indent + f'graph [{_dict_join(self._graph_model.graph_attrs)}];\n'
+        start += indent + f'node [{_dict_join(self._graph_model.node_attrs)}];\n'
+        start += indent + f'edge [{_dict_join(self._graph_model.edge_attrs)}];\n'
+        end = '}'
 
         vertices_dot = ''
         for vertex in self._controller.vertices:

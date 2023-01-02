@@ -19,7 +19,7 @@ class GraphController(GraphModifier):
         edge_model_type: Type[EdgeModel] = EdgeModel,
         vertex_view_type: Type[VertexView] = VertexView,
         edge_view_type: Type[EdgeView] = EdgeView,
-    ):
+    ) -> None:
         self._vertex_model_type = vertex_model_type
         self._edge_model_type = edge_model_type
         self._vertex_view_type = vertex_view_type

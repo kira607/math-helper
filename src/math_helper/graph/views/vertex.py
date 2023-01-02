@@ -36,5 +36,9 @@ class VertexView(GraphModifier, UsesController):
         self._edges_data[new_name] = self._edges_data[self.name]
         self._gc.remove_vertex(self.name)
 
+    @property
+    def dot_attrs(self) -> dict:
+        return self.model.attrs
+
     def _get_model(self):
         return self._vertices_data.get(self._name)
