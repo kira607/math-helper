@@ -41,18 +41,22 @@ class NdGraph(BaseGraph):
             leading_space = ' ' if add_leading_space else ''
             return f'{leading_space}[{joined}]'
 
-        start = f'graph G {{\n'
-        end = '}'
         indent = '    '
+
+        start = f'graph G {{\n'
+        start += indent + f'graph [{_dict_join(self._graph_model.graph_attrs)}];\n'
+        start += indent + f'node [{_dict_join(self._graph_model.node_attrs)}];\n'
+        start += indent + f'edge [{_dict_join(self._graph_model.edge_attrs)}];\n'
+        end = '}'
 
         vertices_dot = ''
         for vertex in self.vertices:
-            vertex_dot = f'"{vertex.name}"' + _get_attrs_string(vertex.model.attrs)
+            vertex_dot = f'"{vertex.name}"' + _get_attrs_string(vertex.dot_attrs)
             vertices_dot += indent + vertex_dot + '\n'
 
         edges_dot = ''
         for edge in self.edges:
-            edge_dot = f'"{edge.v1.name}" -- "{edge.v2.name}"' + _get_attrs_string(edge.model.attrs)
+            edge_dot = f'"{edge.v1.name}" -- "{edge.v2.name}"' + _get_attrs_string(edge.dot_attrs)
             edges_dot += indent + edge_dot + '\n'
 
         dot_string = start + vertices_dot + edges_dot + end
