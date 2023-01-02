@@ -14,7 +14,6 @@ class GraphModel(ReprUtilMixin, CopyMixin):
         self,
         vertices_data: dict[str, VertexModel] | None = None,
         edges_data: dict[str, dict[str, EdgeModel | None]] | None = None,
-        vertices_data: dict[str, VertexModel] | None = None,
     ) -> None:
         self.edges_data: dict[str, dict[str, EdgeModel | None]] = edges_data or {}
         self.vertices_data: dict[str, VertexModel] = vertices_data or {}
