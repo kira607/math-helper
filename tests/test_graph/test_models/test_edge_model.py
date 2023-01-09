@@ -1,6 +1,6 @@
 import pytest
 
-from math_helper.graph.models import EdgeModel
+from math_helper.graph.core.models import EdgeModel
 
 
 @pytest.mark.parametrize(

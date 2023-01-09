@@ -1,1 +1,1 @@
-from .digraph import DiGraph
+from .digraph import di_graph

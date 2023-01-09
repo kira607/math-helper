@@ -1,3 +1,5 @@
+from typing import Literal
+
 from math_helper.polynom import Polynom, PolyToken
 
 from .is_full import get_number_of_edges_to_be_full, is_full
@@ -16,7 +18,7 @@ class ChromaticPolynomCreator:
         return strategy
 
     @classmethod
-    def get_chromatic_polynom(cls, graph, strategy=None) -> str:
+    def get_chromatic_polynom(cls, graph, strategy: Literal['K', 'O'] = None) -> str:
         poly = cls._get_chromatic_polynom(graph, strategy)
         return str(poly)
 
@@ -34,6 +36,8 @@ class ChromaticPolynomCreator:
             if is_full(graph):
                 return Polynom.from_tokens(PolyToken(f'K_{{{n}}}'))
             return cls.k_strategy(graph)
+
+        raise ValueError(f'Unknown strategy: {strategy}')
 
     @classmethod
     def o_strategy(cls, graph) -> Polynom:

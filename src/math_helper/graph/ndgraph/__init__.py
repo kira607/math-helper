@@ -1,1 +1,1 @@
-from .ndgraph import NdGraph
+from .ndgraph import nd_graph

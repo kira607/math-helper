@@ -1,6 +1,3 @@
-from math_helper.graph import DiGraph
-
-
 def make_visited_dict(graph) -> dict[str, bool]:
     return {vertex.name: False for vertex in graph}
 
@@ -8,18 +5,18 @@ def make_visited_dict(graph) -> dict[str, bool]:
 class KosarajuAlgorithm:
 
     @classmethod
-    def _fill_stack(cls, graph: DiGraph, vertex, visited, stack):
-        visited[vertex] = True
+    def _fill_stack(cls, graph, vertex, visited, stack):
+        visited[vertex.name] = True
 
         for out_vertex in graph.get_vertex(vertex.name).out_vertices:
-            if not visited[out_vertex]:
+            if not visited[out_vertex.name]:
                 cls._fill_stack(graph, out_vertex, visited, stack)
 
         stack.append(vertex)
 
     @classmethod
     def _collect_component(cls, graph, vertex, visited, collected=None):
-        visited[vertex] = True
+        visited[vertex.name] = True
 
         collected = collected or []
 
@@ -32,23 +29,23 @@ class KosarajuAlgorithm:
         return collected
 
     @classmethod
-    def _kosaraju(cls, graph: DiGraph) -> list[list[str]]:
+    def _kosaraju(cls, graph) -> list[list[str]]:
 
         stack = []
         visited = make_visited_dict(graph)
 
         for vertex in graph:
-            if visited.get(vertex):
+            if visited.get(vertex.name):
                 continue
             cls._fill_stack(graph, vertex, visited, stack)
 
-        transpose_graph = graph.get_transpose()
+        transpose_graph = graph.transpose
         visited = make_visited_dict(transpose_graph)
 
         strongly_connected_components_vertices = []
         while stack:
             vertex = stack.pop()
-            if visited.get(vertex):
+            if visited.get(vertex.name):
                 continue
             component_vertices = [v.name for v in cls._collect_component(transpose_graph, vertex, visited)]
             strongly_connected_components_vertices.append(component_vertices)
@@ -56,7 +53,7 @@ class KosarajuAlgorithm:
         return strongly_connected_components_vertices
 
     @classmethod
-    def get_strongly_connected_components(cls, graph: DiGraph) -> list[DiGraph]:
+    def get_strongly_connected_components(cls, graph) -> list:
         strongly_connected_components_vertices = cls._kosaraju(graph)
         strongly_connected_components = []
         for vertices in strongly_connected_components_vertices:

@@ -1,6 +1,6 @@
 import pytest
 
-from math_helper.graph.models import VertexModel
+from math_helper.graph.core.models import VertexModel
 
 
 @pytest.mark.parametrize(

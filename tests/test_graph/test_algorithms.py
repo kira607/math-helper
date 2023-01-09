@@ -1,7 +1,6 @@
 import pytest
 
-from math_helper.graph import NdGraph
-from math_helper.graph.helpers import nd_graph as mkg
+from math_helper.graph import nd_graph as mkg
 from math_helper.graph.algorithms import is_null, is_full, ChromaticPolynomCreator
 
 
@@ -14,6 +13,9 @@ from math_helper.graph.algorithms import is_null, is_full, ChromaticPolynomCreat
     ),
 )
 def test_is_null(graph, expected):
+    g = mkg(['A'])
+    for e in g.edges:
+        print(e)
     graph_is_null = is_null(graph)
     assert graph_is_null == expected
 
@@ -47,6 +49,6 @@ def test_is_full(graph, expected):
         )
     ),
 )
-def test_get_chromatic_polynom(graph: NdGraph, strategy, expected_polynom) -> None:
+def test_get_chromatic_polynom(graph, strategy, expected_polynom) -> None:
     chromatic_polynom = ChromaticPolynomCreator.get_chromatic_polynom(graph, strategy)
     assert chromatic_polynom == expected_polynom
