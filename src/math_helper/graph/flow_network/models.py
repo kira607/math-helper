@@ -16,6 +16,7 @@ class FNEdgeModel(EdgeModelWithDot):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.capacity = 1
+        self.flow = 0
 
     def __str__(self) -> str:
         _cls = self.__class__.__name__

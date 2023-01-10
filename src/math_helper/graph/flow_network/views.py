@@ -18,8 +18,22 @@ class FNEdgeView(EdgeViewWithDot):
     @capacity.setter
     def capacity(self, new_capacity: int) -> None:
         edge = self._gc.edges_data.get(self._v1).get(self._v2)
-        edge.dot_attrs.update({'label': new_capacity})
         edge.capacity = new_capacity
+
+    @property
+    def flow(self) -> int:
+        edge = self._gc.edges_data.get(self._v1).get(self._v2)
+        return edge.flow
+
+    @flow.setter
+    def flow(self, new_flow) -> None:
+        edge = self._gc.edges_data.get(self._v1).get(self._v2)
+        edge.flow = new_flow
+
+    @property
+    def residual_capacity(self) -> int:
+        edge = self._gc.edges_data.get(self._v1).get(self._v2)
+        return edge.capacity - edge.flow
 
 
 class FNView(BaseGraph):
@@ -34,7 +48,6 @@ class FNView(BaseGraph):
 
     def add_edge(self, v1: StrConvertable, v2: StrConvertable) -> FNEdgeView:
         new_edge = self._gc.add_edge(v1, v2)
-        new_edge.update_dot_attrs({'label': new_edge.capacity})
         return new_edge
 
     def remove_edge(self, v1: StrConvertable, v2: StrConvertable) -> None:
