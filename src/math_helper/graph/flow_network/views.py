@@ -11,13 +11,14 @@ class FNVertexView(DiGraphVertexView):
 class FNEdgeView(EdgeViewWithDot):
 
     @property
-    def capacity(self) -> float:
-        edge = self._gc.edges_data.get(self._v1, self._v2)
+    def capacity(self) -> int:
+        edge = self._gc.edges_data.get(self._v1).get(self._v2)
         return edge.capacity
 
     @capacity.setter
-    def capacity(self, new_capacity: float) -> None:
-        edge = self._gc.edges_data.get(self._v1, self._v2)
+    def capacity(self, new_capacity: int) -> None:
+        edge = self._gc.edges_data.get(self._v1).get(self._v2)
+        edge.dot_attrs.update({'label': new_capacity})
         edge.capacity = new_capacity
 
 
@@ -31,8 +32,9 @@ class FNView(BaseGraph):
     def sink(self) -> FNVertexView | None:
         return self._gc.get_vertex(self._gc.graph_model.sink, None)
 
-    def add_edge(self, v1: StrConvertable, v2: StrConvertable):
+    def add_edge(self, v1: StrConvertable, v2: StrConvertable) -> FNEdgeView:
         new_edge = self._gc.add_edge(v1, v2)
+        new_edge.update_dot_attrs({'label': new_edge.capacity})
         return new_edge
 
     def remove_edge(self, v1: StrConvertable, v2: StrConvertable) -> None:

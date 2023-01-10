@@ -10,7 +10,7 @@ class FNVertexModel(VertexModelWithDot):
 
 class FNEdgeModel(EdgeModelWithDot):
 
-    capacity = Typed(float)
+    capacity = Typed(int)
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
