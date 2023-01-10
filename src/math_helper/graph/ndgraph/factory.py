@@ -12,9 +12,9 @@ from .views import NdGraphView
 class NdGraphFactory(GraphFactory):
 
     _vertex_model_type = NdGraphVertexModel
-    _vertex_view_type = NdGraphVertexView
     _edge_model_type = NdGraphEdgeModel
-    _edge_view_type = NdGraphEdgeView
     _graph_model_type = NdGraphModel
+    _vertex_view_type = NdGraphVertexView
+    _edge_view_type = NdGraphEdgeView
     _graph_view_type = NdGraphView
     _controller_type = NdGraphController

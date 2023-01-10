@@ -11,6 +11,7 @@ class FNVertexModel(VertexModelWithDot):
 class FNEdgeModel(EdgeModelWithDot):
 
     capacity = Typed(int)
+    flow = Typed(int, 0)
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)

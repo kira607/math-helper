@@ -12,9 +12,9 @@ from .views import FNView
 class FNFactory(GraphFactory):
 
     _vertex_model_type = FNVertexModel
-    _vertex_view_type = FNVertexView
     _edge_model_type = FNEdgeModel
-    _edge_view_type = FNEdgeView
     _graph_model_type = FNModel
+    _vertex_view_type = FNVertexView
+    _edge_view_type = FNEdgeView
     _graph_view_type = FNView
     _controller_type = FNController

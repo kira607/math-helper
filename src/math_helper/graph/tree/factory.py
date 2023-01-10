@@ -12,9 +12,9 @@ from .views import TreeView
 class TreeFactory(GraphFactory):
 
     _vertex_model_type = TreeNodeModel
-    _vertex_view_type = TreeNodeView
     _edge_model_type = TreeEdgeModel
-    _edge_view_type = TreeEdgeView
     _graph_model_type = TreeModel
+    _vertex_view_type = TreeNodeView
+    _edge_view_type = TreeEdgeView
     _graph_view_type = TreeView
     _controller_type = TreeController

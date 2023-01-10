@@ -6,10 +6,10 @@ from math_helper.graph.core.views import VertexView, EdgeView, GraphView
 class GraphFactory:
 
     _vertex_model_type = VertexModel
-    _vertex_view_type = VertexView
     _edge_model_type = EdgeModel
-    _edge_view_type = EdgeView
     _graph_model_type = GraphModel
+    _vertex_view_type = VertexView
+    _edge_view_type = EdgeView
     _graph_view_type = GraphView
     _controller_type = GraphController
 
