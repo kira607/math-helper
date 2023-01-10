@@ -42,9 +42,19 @@ class FNView(BaseGraph):
     def source(self) -> FNVertexView | None:
         return self._gc.get_vertex(self._gc.graph_model.source, None)
 
+    @source.setter
+    def source(self, new_source: str) -> None:
+        self._gc.get_vertex(new_source)
+        self._gc.graph_model.source = new_source
+
     @property
     def sink(self) -> FNVertexView | None:
         return self._gc.get_vertex(self._gc.graph_model.sink, None)
+
+    @sink.setter
+    def sink(self, new_sink: str) -> None:
+        self._gc.get_vertex(new_sink)
+        self._gc.graph_model.sink = new_sink
 
     def add_edge(self, v1: StrConvertable, v2: StrConvertable) -> FNEdgeView:
         new_edge = self._gc.add_edge(v1, v2)
